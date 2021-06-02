@@ -8,7 +8,7 @@ class PerconaXtrabackupAT24 < Formula
   depends_on "sphinx-doc" => :build
   depends_on "libev"
   depends_on "libgcrypt"
-  depends_on "mysql-client"
+  depends_on "mysql-client@5.7"
   depends_on "openssl@1.1"
 
   resource "DBI" do
