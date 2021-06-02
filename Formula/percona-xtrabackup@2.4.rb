@@ -1,9 +1,8 @@
 class PerconaXtrabackupAT24 < Formula
   desc "Open source hot backup tool for InnoDB and XtraDB databases"
   homepage "https://www.percona.com/software/mysql-database/percona-xtrabackup"
-  url "https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.14/source/tarball/percona-xtrabackup-2.4.14.tar.gz"
-  sha256 "4dffa6986aef358675b318b3b9f4a9b8df48e8fc4987ad2469bba1b186b47662"
-  revision 3
+  url "https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.22/source/tarball/percona-xtrabackup-2.4.22.tar.gz"
+  sha256 "6248e430223049bee58a12132b50c836f969f961e05444a81cce77c772bed6a2"
 
   depends_on "cmake" => :build
   depends_on "sphinx-doc" => :build
