@@ -3,12 +3,12 @@ class PerconaXtrabackupAT24 < Formula
   homepage "https://www.percona.com/software/mysql-database/percona-xtrabackup"
   url "https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.14/source/tarball/percona-xtrabackup-2.4.14.tar.gz"
   sha256 "4dffa6986aef358675b318b3b9f4a9b8df48e8fc4987ad2469bba1b186b47662"
+  revision 3
 
   bottle do
-    rebuild 1
-    sha256 "ef5bf99911e8cd49c218154b34ab0f66f257b518888ec5b8bb21104b3f761422" => :mojave
-    sha256 "0d78f86e1768a845f703b4fd5a2cef722f382c6f7bfef2725933d5af02ed19ba" => :high_sierra
-    sha256 "fd664421defce224cee2753357b80521aaa6db4aaf5769fd026037db9b767104" => :sierra
+    sha256 "668e937c8b5bfd4494325f3fb1cad14dca148c572002f4701a8c74e1a7333247" => :catalina
+    sha256 "9c9b799666a1f0ce3a56d86b01989370a0717aa62497241528005c13f2a2dc01" => :mojave
+    sha256 "1776bd19664d4e423558bde7d5c9260ef6859220f7fe5a287f802ee25f1eeba8" => :high_sierra
   end
 
   depends_on "cmake" => :build
@@ -16,10 +16,7 @@ class PerconaXtrabackupAT24 < Formula
   depends_on "libev"
   depends_on "libgcrypt"
   depends_on "mysql-client"
-  depends_on "openssl"
-
-  conflicts_with "percona-server",
-    :because => "both install lib/plugin/keyring_vault.so"
+  depends_on "openssl@1.1"
 
   resource "DBI" do
     url "https://cpan.metacpan.org/authors/id/T/TI/TIMB/DBI-1.641.tar.gz"
@@ -40,8 +37,10 @@ class PerconaXtrabackupAT24 < Formula
     cmake_args = %w[
       -DBUILD_CONFIG=xtrabackup_release
       -DCOMPILATION_COMMENT=Homebrew
+      -DINSTALL_PLUGINDIR=lib/percona-xtrabackup/plugin
       -DINSTALL_MANDIR=share/man
       -DWITH_MAN_PAGES=ON
+      -DINSTALL_MYSQLTESTDIR=
       -DCMAKE_CXX_FLAGS="-DBOOST_NO_CXX11_HDR_ARRAY"
     ]
 
@@ -61,10 +60,8 @@ class PerconaXtrabackupAT24 < Formula
 
     share.install "share/man"
 
-    rm_rf prefix/"xtrabackup-test" # Remove unnecessary files
-    # remove conflicting libraries that are already installed by mysql
+    # remove conflicting library that is already installed by mysql
     rm lib/"libmysqlservices.a"
-    rm lib/"plugin/keyring_file.so"
 
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
 
